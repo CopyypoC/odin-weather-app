@@ -21,3 +21,8 @@ function extractWeatherData(weatherRequest) {
 
   return weatherData;
 }
+
+export async function getWeatherData(location) {
+  const json = await getLocationWeather(location);
+  return extractWeatherData(json);
+}

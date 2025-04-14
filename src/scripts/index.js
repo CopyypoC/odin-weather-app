@@ -1,1 +1,1 @@
-import "./get-weather-data";
+import "./weather-search";
