@@ -7,11 +7,13 @@
 </head>
 <body>
   <div class="container">
-    <button type="button">°F</button>
+    <button type="button" class="toggle-temp">Switch Units</button>
     <form class="location-form" action="">
-      <label for="location">Location</label>
-      <input type="search" name="location" id="location">
-      <button type="submit">Search</button>
+      <label for="location-input">Location</label>
+      <input type="text" name="location" id="location-input"
+        placeholder="Search by city name or postal code"
+        autocomplete="off">
+      <button type="submit" class="location-submit">Search</button>
     </form>
     <div class="location-container">
       <h1 class="resolved-address">
@@ -23,7 +25,7 @@
         <p class="date-day">Monday</p>
         <p class="date-time">April 14, 5:00 pm</p>
         <p class="temp">60 °F</p>
-        <p class="img">Icon placeholder</p>
+        <p class="icon">Icon placeholder</p>
         <p class="conditions">Cloudy</p>
       </div>
       <div class="weather-extra">
