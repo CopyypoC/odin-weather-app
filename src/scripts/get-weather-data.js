@@ -6,6 +6,7 @@ async function getLocationWeather(location) {
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${WEATHER_API_KEY}`,
     );
     const json = await response.json();
+    console.log(json);
     return json;
   } catch (err) {
     console.error(err);

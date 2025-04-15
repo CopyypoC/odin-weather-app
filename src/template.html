@@ -6,10 +6,53 @@
   <title>Weather App</title>
 </head>
 <body>
-  <form class="location-form" action="">
-    <label for="location">Location</label>
-    <input type="search" name="location" id="location">
-    <button type="submit">Search</button>
-  </form>
+  <div class="container">
+    <button type="button">°F</button>
+    <form class="location-form" action="">
+      <label for="location">Location</label>
+      <input type="search" name="location" id="location">
+      <button type="submit">Search</button>
+    </form>
+    <div class="address-container">
+      <h1 class="resolved-address">
+        London, England, United Kingdom
+      </h1>
+    </div>
+    <div class="weather-container">
+      <div class="weather-card">
+        <p class="date-day">Monday</p>
+        <p class="date-time">April 14, 5:00 pm</p>
+        <p class="temp">60 °F</p>
+        <p class="img">Icon placeholder</p>
+        <p class="conditions">Cloudy</p>
+      </div>
+      <div class="weather-extra">
+        <div class="feels-like-container">
+          <p class="feels-like">Feels Like</p>
+          <p class="feels-like-temp">50 F</p>
+        </div>
+        <div class="precip-container">
+          <p class="precip">Precip</p>
+          <p class="precip-num">0.46 in</p>
+        </div>
+        <div class="windspeed-container">
+          <p class="windspeed">Wind Speed</p>
+          <p class="windspeed-num">15.4 mph</p>
+        </div>
+        <div class="humidity-container">
+          <p class="humidity">Humidity</p>
+          <p class="humidity-num">62%</p>
+        </div>
+      </div>
+      <div class="weather-desc">
+        <p class="description">
+          Cooling down with a chance of rain multiple days
+        </p>
+      </div>
+    </div>
+    <div class="gif-container">
+      <p class="gif">Gif Here</p>
+    </div>
+  </div>
 </body>
 </html>
