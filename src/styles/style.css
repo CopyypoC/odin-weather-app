@@ -1,36 +1,96 @@
 /* Reset Styles */
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0;
+  margin: 0;
 }
 
 body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button, textarea, select {
-    font: inherit;
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
-p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 /* System Font Stack */
 body {
-    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family:
+    system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Custom Properties */
+:root {
+  --font-color: #ffffff;
+  --main-bg-color: #39516d;
+  --secondary-bg-color: #466992;
+  --accent-color: #ffefad;
+}
+
+/* General */
+body {
+  min-height: 100vh;
+  /* background-color: var(--main-bg-color); */
+}
+
+.container {
+  display: grid;
+  grid-template:
+    "toggle search search" max-content
+    "location location location" max-content
+    "weather weather gif" 1fr
+    / 100px 2fr 1fr;
+}
+
+.toggle-temp {
+  grid-area: toggle;
+}
+
+.location-form {
+  grid-area: search;
+}
+
+.location-container {
+  grid-area: location;
+}
+
+.weather-container {
+  grid-area: weather;
+}
+
+.gif-container {
+  grid-area: gif;
 }
