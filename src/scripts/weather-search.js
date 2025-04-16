@@ -2,7 +2,9 @@ import { getWeatherData } from "./get-weather-data";
 import { getGifUrl } from "./get-gif";
 import { format } from "date-fns";
 
-let unit = "F";
+let tempUnit = "F";
+let precipUnit = "in";
+let windspeedUnit = "mph";
 
 const locationForm = document.querySelector(".location-form");
 const location = document.getElementById("location-input");
@@ -23,9 +25,10 @@ const weatherContainer = document.querySelector(".weather-container");
 async function displayWeatherData(weatherData) {
   weatherContainer.replaceChildren();
   await displayWeatherCard(weatherData);
+  displayWeatherExtra(weatherData);
 }
 
-async function displayWeatherCard(weatherData) {
+function displayWeatherCard(weatherData) {
   const weatherCard = document.createElement("div");
   weatherCard.classList.add("weather-card");
 
@@ -41,7 +44,7 @@ async function displayWeatherCard(weatherData) {
 
   const temp = document.createElement("p");
   temp.classList.add("temp");
-  temp.textContent = `${weatherData.currentConditions.temp} °${unit}`;
+  temp.textContent = `${weatherData.currentConditions.temp} °${tempUnit}`;
 
   const icon = document.createElement("img");
   icon.classList.add("icon");
@@ -58,6 +61,48 @@ async function displayWeatherCard(weatherData) {
 
   weatherCard.append(dateDay, dateTime, temp, icon, conditions);
   weatherContainer.append(weatherCard);
+}
+
+function displayWeatherExtra(weatherData) {
+  const weatherExtra = document.createElement("div");
+  weatherExtra.classList.add("weather-extra");
+
+  const extraContainerArr = [];
+  for (let i = 0; i < 4; i++) {
+    const extraContainer = document.createElement("div");
+    extraContainer.classList.add("extra-container");
+    extraContainerArr.push(extraContainer);
+  }
+
+  const feelsLike = document.createElement("p");
+  feelsLike.textContent = "Feels Like";
+  const feelsLikeNum = document.createElement("p");
+  feelsLikeNum.textContent = `${weatherData.currentConditions.feelslike} °${tempUnit}`;
+
+  const precip = document.createElement("p");
+  precip.textContent = "Precip";
+  const precipNum = document.createElement("p");
+  precipNum.textContent = `${weatherData.currentConditions.precip} ${precipUnit}`;
+
+  const windspeed = document.createElement("p");
+  windspeed.textContent = "Wind Speed";
+  const windspeedNum = document.createElement("p");
+  windspeedNum.textContent = `${weatherData.currentConditions.windspeed} ${windspeedUnit}`;
+
+  const humidity = document.createElement("p");
+  humidity.textContent = "Humidity";
+  const humidityNum = document.createElement("p");
+  humidityNum.textContent = weatherData.currentConditions.humidity + " %";
+
+  extraContainerArr[0].append(feelsLike, feelsLikeNum);
+  extraContainerArr[1].append(precip, precipNum);
+  extraContainerArr[2].append(windspeed, windspeedNum);
+  extraContainerArr[3].append(humidity, humidityNum);
+  for (let i = 0; i < 4; i++) {
+    weatherExtra.appendChild(extraContainerArr[i]);
+  }
+
+  weatherContainer.appendChild(weatherExtra);
 }
 
 const gifContainer = document.querySelector(".gif-container");

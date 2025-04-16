@@ -214,7 +214,7 @@ label[for="location-input"] {
   place-self: center;
 }
 
-.weather-extra > * {
+.extra-container {
   font-size: 1.1rem;
   display: flex;
   justify-content: space-between;
