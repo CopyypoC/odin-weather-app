@@ -26,6 +26,7 @@ async function displayWeatherData(weatherData) {
   weatherContainer.replaceChildren();
   await displayWeatherCard(weatherData);
   displayWeatherExtra(weatherData);
+  displayWeatherDesc(weatherData);
 }
 
 function displayWeatherCard(weatherData) {
@@ -99,10 +100,22 @@ function displayWeatherExtra(weatherData) {
   extraContainerArr[2].append(windspeed, windspeedNum);
   extraContainerArr[3].append(humidity, humidityNum);
   for (let i = 0; i < 4; i++) {
-    weatherExtra.appendChild(extraContainerArr[i]);
+    weatherExtra.append(extraContainerArr[i]);
   }
 
-  weatherContainer.appendChild(weatherExtra);
+  weatherContainer.append(weatherExtra);
+}
+
+function displayWeatherDesc(weatherData) {
+  const weatherDesc = document.createElement("div");
+  weatherDesc.classList.add("weather-desc");
+
+  const description = document.createElement("p");
+  description.classList.add("description");
+  description.textContent = weatherData.days[0].description;
+
+  weatherDesc.append(description);
+  weatherContainer.append(weatherDesc);
 }
 
 const gifContainer = document.querySelector(".gif-container");
@@ -115,16 +128,3 @@ function displayGif(url) {
   gifContainer.replaceChildren();
   gifContainer.appendChild(gif);
 }
-// weatherData Object ↓
-// description: 'Cooling down with a chance of rain',
-// resolvedAddress: "London, England, United Kingdom"
-// currentConditions {
-//   conditions: 'Partially cloudy',
-//   temp: 52.3,
-//   feelslike: 55.2,
-//   icon: 'partly-cloudy-night',
-//   precip: 0.45,
-//   windspeed: 2.8,
-//   humidity: 85.4,
-//   datetimeEpoch: 1744673220,
-// }
