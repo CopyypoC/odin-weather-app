@@ -75,7 +75,7 @@ body {
     "toggle search search" max-content
     "location location location" max-content
     "weather weather gif" 1fr
-    / max-content 2fr 1fr;
+    / max-content max-content 1fr;
   row-gap: 30px;
 }
 
@@ -232,7 +232,7 @@ label[for="location-input"] {
 /* Gif */
 .gif-container {
   grid-area: gif;
-  margin: auto 50px auto 10px;
+  margin: auto;
 }
 
 .gif {
