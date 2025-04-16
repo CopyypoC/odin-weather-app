@@ -20,10 +20,11 @@ locationForm.addEventListener("submit", async (e) => {
   location.value = "";
 });
 
-const locationContainer = document.querySelector(".location-container");
 const weatherContainer = document.querySelector(".weather-container");
 async function displayWeatherData(weatherData) {
   weatherContainer.replaceChildren();
+  locationContainer.replaceChildren();
+  displayWeatherLocation(weatherData);
   await displayWeatherCard(weatherData);
   displayWeatherExtra(weatherData);
   displayWeatherDesc(weatherData);
@@ -116,6 +117,15 @@ function displayWeatherDesc(weatherData) {
 
   weatherDesc.append(description);
   weatherContainer.append(weatherDesc);
+}
+
+const locationContainer = document.querySelector(".location-container");
+function displayWeatherLocation(weatherData) {
+  const resolvedAddress = document.createElement("h1");
+  resolvedAddress.classList.add("resolved-address");
+  resolvedAddress.textContent = weatherData.resolvedAddress;
+
+  locationContainer.append(resolvedAddress);
 }
 
 const gifContainer = document.querySelector(".gif-container");
