@@ -2,35 +2,47 @@ import { getWeatherData } from "./get-weather-data";
 import { getGifUrl } from "./get-gif";
 import { format } from "date-fns";
 
-let tempUnit = "F";
-let precipUnit = "in";
-let windspeedUnit = "mph";
+const imperial = {
+  temp: "°F",
+  precip: "in",
+  speed: "mph",
+};
+
+const metric = {
+  temp: "°C",
+  precip: "mm",
+  speed: "kph",
+};
+
+let system = "imperial";
+let prevSearch = "";
 
 const locationForm = document.querySelector(".location-form");
 const location = document.getElementById("location-input");
 locationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const weatherData = await getWeatherData(location.value);
+  prevSearch = location.value;
+  const weatherData = await getWeatherData(location.value, system);
   const gifUrl = await getGifUrl(weatherData.currentConditions.conditions);
 
   console.log(weatherData);
-  displayWeatherData(weatherData);
+  displayWeatherData(weatherData, system);
 
   displayGif(gifUrl);
   location.value = "";
 });
 
 const weatherContainer = document.querySelector(".weather-container");
-async function displayWeatherData(weatherData) {
+async function displayWeatherData(weatherData, system) {
   weatherContainer.replaceChildren();
   locationContainer.replaceChildren();
   displayWeatherLocation(weatherData);
-  await displayWeatherCard(weatherData);
-  displayWeatherExtra(weatherData);
+  await displayWeatherCard(weatherData, system);
+  displayWeatherExtra(weatherData, system);
   displayWeatherDesc(weatherData);
 }
 
-function displayWeatherCard(weatherData) {
+function displayWeatherCard(weatherData, system) {
   const weatherCard = document.createElement("div");
   weatherCard.classList.add("weather-card");
 
@@ -46,7 +58,11 @@ function displayWeatherCard(weatherData) {
 
   const temp = document.createElement("p");
   temp.classList.add("temp");
-  temp.textContent = `${weatherData.currentConditions.temp} °${tempUnit}`;
+  if (system === "imperial") {
+    temp.textContent = `${weatherData.currentConditions.temp} ${imperial.temp}`;
+  } else if (system === "metric") {
+    temp.textContent = `${weatherData.currentConditions.temp} ${metric.temp}`;
+  }
 
   const icon = document.createElement("img");
   icon.classList.add("icon");
@@ -65,7 +81,7 @@ function displayWeatherCard(weatherData) {
   weatherContainer.append(weatherCard);
 }
 
-function displayWeatherExtra(weatherData) {
+function displayWeatherExtra(weatherData, system) {
   const weatherExtra = document.createElement("div");
   weatherExtra.classList.add("weather-extra");
 
@@ -79,17 +95,29 @@ function displayWeatherExtra(weatherData) {
   const feelsLike = document.createElement("p");
   feelsLike.textContent = "Feels Like";
   const feelsLikeNum = document.createElement("p");
-  feelsLikeNum.textContent = `${weatherData.currentConditions.feelslike} °${tempUnit}`;
+  if (system === "imperial") {
+    feelsLikeNum.textContent = `${weatherData.currentConditions.feelslike} ${imperial.temp}`;
+  } else if (system === "metric") {
+    feelsLikeNum.textContent = `${weatherData.currentConditions.feelslike} ${metric.temp}`;
+  }
 
   const precip = document.createElement("p");
   precip.textContent = "Precip";
   const precipNum = document.createElement("p");
-  precipNum.textContent = `${weatherData.currentConditions.precip} ${precipUnit}`;
+  if (system === "imperial") {
+    precipNum.textContent = `${weatherData.currentConditions.precip} ${imperial.precip}`;
+  } else if (system === "metric") {
+    precipNum.textContent = `${weatherData.currentConditions.precip} ${metric.precip}`;
+  }
 
   const windspeed = document.createElement("p");
   windspeed.textContent = "Wind Speed";
   const windspeedNum = document.createElement("p");
-  windspeedNum.textContent = `${weatherData.currentConditions.windspeed} ${windspeedUnit}`;
+  if (system === "imperial") {
+    windspeedNum.textContent = `${weatherData.currentConditions.windspeed} ${imperial.speed}`;
+  } else if (system === "metric") {
+    windspeedNum.textContent = `${weatherData.currentConditions.windspeed} ${metric.speed}`;
+  }
 
   const humidity = document.createElement("p");
   humidity.textContent = "Humidity";
@@ -138,3 +166,26 @@ function displayGif(url) {
   gifContainer.replaceChildren();
   gifContainer.appendChild(gif);
 }
+
+// const locationSubmit = document.querySelector('.location-submit');
+const toggleUnits = document.querySelector(".toggle-units");
+toggleUnits.addEventListener("click", () => {
+  if (prevSearch === "") {
+    return;
+  }
+
+  if (system === "imperial") {
+    system = "metric";
+  } else {
+    system = "imperial";
+  }
+
+  location.value = prevSearch;
+  locationForm.requestSubmit();
+});
+
+// Store which system is being used
+// Each system object has the units
+// Toggle units swaps system
+// System gets passed to getWeatherData to change API call
+// Render with new API call and units

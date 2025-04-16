@@ -1,10 +1,17 @@
 const WEATHER_API_KEY = "4L8UCU9LFDTAE5TN7VUVVNURC";
 
-async function getLocationWeather(location) {
+async function getLocationWeather(location, system) {
   try {
-    const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${WEATHER_API_KEY}`,
-    );
+    let response = {};
+    if (system === "metric") {
+      response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${WEATHER_API_KEY}&unitGroup=metric`,
+      );
+    } else if (system === "imperial") {
+      response = await fetch(
+        `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${WEATHER_API_KEY}`,
+      );
+    }
     const json = await response.json();
     console.log(json);
     return json;
@@ -23,7 +30,7 @@ function extractWeatherData(weatherRequest) {
   return weatherData;
 }
 
-export async function getWeatherData(location) {
-  const json = await getLocationWeather(location);
+export async function getWeatherData(location, system) {
+  const json = await getLocationWeather(location, system);
   return extractWeatherData(json);
 }
