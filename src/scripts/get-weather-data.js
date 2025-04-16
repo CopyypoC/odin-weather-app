@@ -17,6 +17,7 @@ async function getLocationWeather(location, system) {
     return json;
   } catch (err) {
     console.error(err);
+    throw new Error("Must enter valid location.");
   }
 }
 

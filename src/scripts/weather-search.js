@@ -21,15 +21,20 @@ const locationForm = document.querySelector(".location-form");
 const location = document.getElementById("location-input");
 locationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  prevSearch = location.value;
-  const weatherData = await getWeatherData(location.value, system);
-  const gifUrl = await getGifUrl(weatherData.currentConditions.conditions);
+  try {
+    prevSearch = location.value;
+    const weatherData = await getWeatherData(location.value, system);
+    const gifUrl = await getGifUrl(weatherData.currentConditions.conditions);
 
-  console.log(weatherData);
-  displayWeatherData(weatherData, system);
+    console.log(weatherData);
+    displayWeatherData(weatherData, system);
 
-  displayGif(gifUrl);
-  location.value = "";
+    displayGif(gifUrl);
+    location.value = "";
+  } catch (err) {
+    location.setCustomValidity(err);
+    location.reportValidity();
+  }
 });
 
 const weatherContainer = document.querySelector(".weather-container");
@@ -167,7 +172,6 @@ function displayGif(url) {
   gifContainer.appendChild(gif);
 }
 
-// const locationSubmit = document.querySelector('.location-submit');
 const toggleUnits = document.querySelector(".toggle-units");
 toggleUnits.addEventListener("click", () => {
   if (prevSearch === "") {
@@ -183,9 +187,3 @@ toggleUnits.addEventListener("click", () => {
   location.value = prevSearch;
   locationForm.requestSubmit();
 });
-
-// Store which system is being used
-// Each system object has the units
-// Toggle units swaps system
-// System gets passed to getWeatherData to change API call
-// Render with new API call and units
